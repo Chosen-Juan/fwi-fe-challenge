@@ -2,28 +2,12 @@
 
 $header-height: 2.5rem;
 
-.player-table {
-  margin-top: 3.5rem;
-  padding-top: calc(#{$header-height} + 1px); // 1px for border of header
-}
-
 .table {
-  border-collapse: collapse;
-  table-layout: fixed;
+  margin-top: 3.5rem;
+  padding-top: calc($header-height + 1px); // 1px for border of header
   width: 100%;
+  margin-bottom: 0 !important;
 
-  &--fixed {
-    background-color: $pearl;
-    border-bottom: 1px solid $fog;
-    left: 0;
-    position: fixed;
-    top: 3.5rem;
-    z-index: 1;
-  }
-
-  &--body {
-    background-color: $snow;
-  }
 
   &__row {
     background-color: $snow;
@@ -38,33 +22,8 @@ $header-height: 2.5rem;
     }
   }
 
-  &__header {
-    letter-spacing: 0.00937em;
-    line-height: 1.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    height: $header-height;
-    text-align: left;
-    vertical-align: middle;
-  }
-
-  &__avatar {
-    text-align: center;
-    width: 4rem;
-  }
-
-  &__player {
-    width: 100%;
-  }
-
-  &__winnings {
-    padding-right: 1.5rem;
-    text-align: right;
-    width: 8rem;
-  }
-
-  &__native {
-    width: 6rem;
+  .centered-text {
+    vertical-align: inherit;
   }
 }
 

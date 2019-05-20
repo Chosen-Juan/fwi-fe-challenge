@@ -7,38 +7,32 @@ import { COUNTRIES } from '../constants';
 
 const TableBody = ({ players }) => {
   return (
-    <table
-      id="player-table-body"
-      role="presentation"
-      className="table table--body"
-    >
-      <tbody>
-        {players.map(({ id, name, country, winnings, imageUrl }) => (
-          <tr key={id} role="row" className="table__row">
-            <td role="gridcell" className="table__avatar">
-              <Avatar src={imageUrl} />
-            </td>
-            <td role="gridcell" className="table__player">
-              {name}
-            </td>
-            <td role="gridcell" className="table__winnings">
-              {winnings.toLocaleString(undefined, {
-                style: 'currency',
-                currency: 'USD',
-              })}
-            </td>
-            <td role="gridcell" className="table__native">
-              <div className="country">
-                <Avatar>
-                  <Flags code={country} alt="" />
-                </Avatar>
-                {country}
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <tbody className="table--body">
+      {players.map(({ id, name, country, winnings, imageUrl }) => (
+        <tr key={id} role="row" className="table__row">
+          <td>
+            <Avatar src={imageUrl} />
+          </td>
+          <td className="centered-text">
+            {name}
+          </td>
+          <td className="centered-text">
+            {winnings.toLocaleString(undefined, {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </td>
+          <td>
+            <div className="country">
+              <Avatar>
+                <Flags code={country} alt="" />
+              </Avatar>
+              {country}
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
   );
 };
 

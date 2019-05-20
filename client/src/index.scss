@@ -1,9 +1,15 @@
 @import 'variables';
 
+$family-sans-serif: Montserrat, sans-serif;
+$grey-dark: $graphite;
+$grey-light: $metal;
+$primary: $vivid;
+$danger: $palisade;
+$link: $grape;
 html {
   background-color: #fafafa;
   color: rgba($sleeping-panther, 0.87);
-  font-family: Montserrat, sans-serif;
+  font-family: $family-sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
@@ -17,3 +23,4 @@ body {
 *::after {
   box-sizing: border-box;
 }
+@import 'bulma/bulma.sass';

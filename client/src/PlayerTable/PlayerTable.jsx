@@ -10,6 +10,7 @@ import { fetchPlayersSuccess } from '../appState/actions';
 import './PlayerTable.scss';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
+import api from '../api';
 
 class PlayerTable extends PureComponent {
   static propTypes = {
@@ -27,15 +28,8 @@ class PlayerTable extends PureComponent {
 
   componentDidMount() {
     const { fetchPlayersSuccess } = this.props;
-    fetch('http://localhost:3001/players', {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
+    api.fetchPlayers()
+      .then(({ data }) => {
         if (data) {
           fetchPlayersSuccess(data);
           return data;
@@ -47,15 +41,13 @@ class PlayerTable extends PureComponent {
   render() {
     const { players } = this.props;
     return (
-      <div
-        id="player-table-grid"
-        role="grid"
+      <table
         aria-label="Poker Players"
-        className="player-table"
+        className="table is-scrollable"
       >
         <TableHeader />
         <TableBody players={players} />
-      </div>
+      </table>
     );
   }
 }
