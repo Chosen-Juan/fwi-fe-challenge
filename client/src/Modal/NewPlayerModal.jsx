@@ -6,7 +6,8 @@ import { Formik } from 'formik';
 import './NewPlayerModal.scss';
 import { COUNTRIES } from '../constants';
 import Avatar from '../Avatar';
-import { createPlayer } from '../appState/actions';
+import { createPlayer, uploadImage, resetPlayerStore } from '../appState/actions';
+import { compress } from '../helpers';
 
 const sortAlphabetically = (a, b) => {
   if (a.value < b.value) { return -1; }
@@ -21,12 +22,26 @@ export class NewPlayerModal extends Component {
 
   state = {
     active: false,
-    buttonClass: 'is-primary'
+    buttonClass: 'is-primary',
+  };
+
+  defaultValues = {
+    name: '',
+    winnings: '',
+    country: 'US',
+  };
+
+  closeModal = callback => {
+    if(callback && typeof callback === 'function') {
+      callback();
+      this.fileInput.value = '';
+    }
+    this.setState({ active: false });
   };
 
   setActive = () => {
-    this.setState({ active: !this.state.active });
-  };
+    this.setState({ active: true });
+  }
 
   componentWillReceiveProps({ player }) {
     let buttonClass;
@@ -56,11 +71,28 @@ export class NewPlayerModal extends Component {
     return options;
   };
 
-  submit = (values, { setSubmitting }) => {
-    const { name, country, winnings } = values;
+
+  submit = (values, { setSubmitting, resetForm }) => {
+    const successHandler = () => {
+      setSubmitting(false);
+      resetForm(this.defaultValues);
+      this.fileInput.value = '';
+      setTimeout(() => this.props.resetPlayerStore(), 3000);
+    };
+    const { name, country, winnings, pic } = values;
     setSubmitting(true);
-    this.props.createPlayer({ name, country, winnings })
-      .then(setSubmitting(false));
+    if(pic) {
+      compress(pic)
+        .then(compressedPic => this.props.uploadImage(compressedPic))
+        .then(() => {
+          const { imageUrl } = this.props.player;
+          return this.props.createPlayer({ name, country, winnings, imageUrl })
+        })
+        .then(successHandler);
+    } else {
+      this.props.createPlayer({ name, country, winnings })
+        .then(successHandler);
+    }
   }
 
   render() {
@@ -68,19 +100,27 @@ export class NewPlayerModal extends Component {
       <React.Fragment>
         <button className="button is-primary is-medium is-size-7-mobile" onClick={this.setActive}>New Player</button>
         <div className={this.state.active ? 'modal is-active' : 'modal'}>
-          <div className="modal-background" onClick={this.setActive}></div>
+          <div className="modal-background" onClick={this.closeModal}></div>
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Add new player</p>
-              <button className="delete" aria-label="close" onClick={this.setActive}></button>
+              <button className="delete" aria-label="close" onClick={this.closeModal}></button>
             </header>
             <section className="modal-card-body">
               <Formik
-                initialValues={{ name: '', winnings: '', country: 'US' }}
+                initialValues={this.defaultValues}
                 onSubmit={this.submit}
               >
               {
-                ({ values, handleChange, isSubmitting, handleBlur, handleSubmit }) =>
+                ({
+                  values,
+                  handleChange,
+                  isSubmitting,
+                  handleBlur,
+                  handleReset,
+                  handleSubmit,
+                  setFieldValue,
+                }) =>
                 (<form className="form" onSubmit={handleSubmit}>
                   <div className="field">
                     <label className="label">Name</label>
@@ -133,6 +173,19 @@ export class NewPlayerModal extends Component {
                       </span>
                     </div>
                   </div>
+                  <div className="field">
+                    <label className="label">Picture</label>
+                    <input
+                      className="input"
+                      id="pic"
+                      name="pic"
+                      type="file"
+                      onChange={event => {
+                        setFieldValue("pic", event.currentTarget.files[0]);
+                      }}
+                      ref={ref => this.fileInput = ref}
+                    />
+                  </div>
                   <footer>
                     <button
                       type="submit"
@@ -141,7 +194,7 @@ export class NewPlayerModal extends Component {
                     >
                       {this.props.player.success ? 'Saved!' : 'Save'}
                     </button>
-                    <button type="button" className="button is-danger" onClick={this.setActive}>Cancel</button>
+                    <button type="button" className="button is-danger" onClick={() => this.closeModal(handleReset)}>Cancel</button>
                   </footer>
                 </form>)
               }
@@ -159,7 +212,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  createPlayer
+  createPlayer, uploadImage, resetPlayerStore
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPlayerModal)
