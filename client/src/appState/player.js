@@ -9,6 +9,7 @@ import {
   EDIT_PLAYER_START,
   EDIT_PLAYER_ERROR,
   EDIT_PLAYER_SUCCESS,
+  DELETE_PLAYER_ERROR,
 } from './constants';
 
 const initialState = {};
@@ -49,6 +50,10 @@ function editPlayerError(state, { error }) {
   return { ...state, error, loading: false };
 }
 
+function deletePlayerError(state, { error }) {
+  return { ...state, error, loading: false };
+}
+
 function resetPlayerStore() {
   return initialState;
 }
@@ -73,6 +78,8 @@ export default function players(state = initialState, action) {
       return editPlayerSuccess(state);
     case EDIT_PLAYER_ERROR:
       return editPlayerError(state, action.payload.error);
+    case DELETE_PLAYER_ERROR:
+      return deletePlayerError(state, action.payload.error);
     case RESET_PLAYER_STORE:
       return resetPlayerStore();
     default:

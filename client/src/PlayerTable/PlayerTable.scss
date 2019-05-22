@@ -16,6 +16,15 @@ $header-height: 2.5rem;
     background-color: $snow;
     transition: background-color 0.15s;
 
+    @media(hover: none) {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
     &:hover {
       background-color: $pearl;
     }

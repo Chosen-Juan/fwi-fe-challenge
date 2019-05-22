@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import Avatar from '../Avatar';
 import { COUNTRIES, COUNTRIES_ARRAY } from '../constants';
-import { editPlayer } from '../appState/actions';
+import { editPlayer, deletePlayer } from '../appState/actions';
 
 export class Player extends Component {
   static propTypes = {
@@ -16,7 +16,15 @@ export class Player extends Component {
       winnings: PropTypes.number.isRequired,
       imageUrl: PropTypes.string.isRequired,
     })
-  }
+  };
+
+  handleButtonPress = () => {
+    this.buttonPressTimer = setTimeout(() => this.setEditing(true), 1000);
+  };
+
+  handleButtonRelease = () => {
+    clearTimeout(this.buttonPressTimer);
+  };
 
   state = {
     editing: false,
@@ -29,16 +37,17 @@ export class Player extends Component {
     this.setState({ editing });
   };
 
-  cancelEditing = () => {
-    this.setEditing(false);
-  }
+  deletePlayer = () => {
+    const { deletePlayer, player } = this.props;
+    deletePlayer(player.id);
+  };
 
   saveEdit = () => {
     const { id } = this.props.player;
     const { name, winnings, country } = this.state;
     this.props.editPlayer(id, name, parseInt(winnings), country)
       .then(this.finishEditing);
-  }
+  };
 
   finishEditing = () => {
     this.setState({ success: true });
@@ -46,11 +55,11 @@ export class Player extends Component {
       this.setState({ success: false });
       this.setEditing(false);
     }, 3000);
-  }
+  };
 
   onChangeHandler = ({ target }) => {
     this.setState({ [target.name]: target.value });
-  }
+  };
 
   renderCountryOptions = () => {
     const options = [
@@ -69,7 +78,17 @@ export class Player extends Component {
   render() {
     const { player } = this.props;
     return (
-      <tr key={player.id} role="row" className="table__row">
+      <tr
+        key={player.id}
+        role="row"
+        className="table__row"
+        onTouchStart={this.handleButtonPress}
+        onTouchEnd={this.handleButtonRelease}
+      >
+        <tr className={this.state.editing ? "is-hidden-desktop" : "is-hidden"}>
+          <button className="button is-primary" onClick={this.saveEdit}>Save</button>
+          <button className="button is-danger" onClick={() => this.setEditing(false)}>Cancel</button>
+        </tr>
         <td>
           <Avatar src={player.imageUrl} />
         </td>
@@ -102,11 +121,13 @@ export class Player extends Component {
           </select>
         </td>
         <td className={this.state.success ? "notification is-success" : "is-hidden"}>Saved</td>
-        <td className={this.state.success ? "is-hidden" : "buttons is-hidden-mobile"}>
-          <button className={this.state.editing ? "button is-primary" : "is-hidden"} onClick={this.saveEdit}>Save</button>
-          <button className={this.state.editing ? "is-hidden" : "button is-link is-outlined"} onClick={() => this.setEditing(true)}>Edit</button>
-          <button className={this.state.editing ? "button is-danger" : "is-hidden"} onClick={this.cancelEditing}>Cancel</button>
-          <button className={this.state.editing ? "is-hidden" : "button is-danger is-outlined"}>&times;</button>
+        <td className={this.state.success ? "is-hidden" : ""}>
+          <div className={this.state.editing ? "is-hidden-touch": "is-hidden"}>
+            <button className="button is-primary" onClick={this.saveEdit}>Save</button>
+            <button className="button is-danger" onClick={() => this.setEditing(false)}>Cancel</button>
+          </div>
+          <button className={this.state.editing ? "is-hidden" : "button is-link is-outlined is-hidden-touch"} onClick={() => this.setEditing(true)}>Edit</button>
+          <button className={this.state.editing ? "is-hidden" : "button is-danger is-outlined"} onClick={this.deletePlayer}>&times;</button>
         </td>
       </tr>
     );
@@ -117,7 +138,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  editPlayer
+  editPlayer, deletePlayer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

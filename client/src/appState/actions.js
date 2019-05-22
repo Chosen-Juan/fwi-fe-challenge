@@ -10,6 +10,7 @@ import {
   EDIT_PLAYER_START,
   EDIT_PLAYER_SUCCESS,
   EDIT_PLAYER_ERROR,
+  DELETE_PLAYER_ERROR,
 } from './constants';
 import api from '../api';
 
@@ -55,6 +56,10 @@ export function editPlayerSuccess() {
 
 export function editPlayerError(error) {
   return { type: EDIT_PLAYER_ERROR, payload: { error } };
+}
+
+export function deletePlayerError(error) {
+  return { type: DELETE_PLAYER_ERROR, payload: { error } };
 }
 
 export function fetchPlayers() {
@@ -108,6 +113,16 @@ export function editPlayer(id, name, winnings, country) {
           dispatch(fetchPlayers());
         },
         error => dispatch(editPlayerError(error))
+      );
+  }
+}
+
+export function deletePlayer(id) {
+  return function(dispatch) {
+    return api.deletePlayer(id)
+      .then(
+        () => dispatch(fetchPlayers()),
+        error => dispatch(deletePlayerError(error))
       );
   }
 }

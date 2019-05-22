@@ -41,6 +41,10 @@ export class Api {
   editPlayer(id, name, winnings, country) {
     return this.api.patch(`/players/${id}`, { name, winnings, country });
   }
+
+  deletePlayer(id) {
+    return this.api.delete(`/players/${id}`);
+  }
 }
 
 export default new Api(config);

@@ -129,7 +129,7 @@ added any additional steps.
 
 - [-] Create Player
 - [-] Modify Player
-- [ ] Delete Player
+- [-] Delete Player
 - [ ] Implement sorting (optional)
 - [ ] Lazy loading/pagination (optional)
 - [ ] Tests (optional)

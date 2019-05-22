@@ -1,5 +1,5 @@
 export default {
-  url: 'http://localhost:3001',
+  url: 'http://192.168.0.5:3001',
   imgApi: {
     url: '//api.cloudinary.com/v1_1/',
     cloudName: 'dwzm2stta',
