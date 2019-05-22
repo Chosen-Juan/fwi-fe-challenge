@@ -3,20 +3,12 @@ import { connect } from 'react-redux'
 import Flags from 'react-world-flags';
 import { Formik } from 'formik';
 
-import './NewPlayerModal.scss';
-import { COUNTRIES } from '../constants';
+import './Modal.scss';
+import { COUNTRIES_ARRAY } from '../constants';
 import Avatar from '../Avatar';
 import { createPlayer, uploadImage, resetPlayerStore } from '../appState/actions';
 import { compress } from '../helpers';
 
-const sortAlphabetically = (a, b) => {
-  if (a.value < b.value) { return -1; }
-  if (a.value > b.value) { return 1; }
-  return 0;
-};
-const countriesArray = Object.keys(COUNTRIES)
-  .map(k => ({ code: k, value: COUNTRIES[k] }))
-  .sort(sortAlphabetically);
 
 export class NewPlayerModal extends Component {
 
@@ -61,7 +53,7 @@ export class NewPlayerModal extends Component {
     const options = [
       <option key="default" disabled value>Select a country</option>
     ];
-    countriesArray.forEach(country => {
+    COUNTRIES_ARRAY.forEach(country => {
       options.push(
         <option key={country.code} value={country.code}>
           {country.value}
@@ -215,4 +207,4 @@ const mapDispatchToProps = {
   createPlayer, uploadImage, resetPlayerStore
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPlayerModal)
+export default connect(mapStateToProps, mapDispatchToProps)(NewPlayerModal);

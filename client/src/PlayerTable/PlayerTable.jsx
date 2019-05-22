@@ -5,12 +5,11 @@ import { connectAdvanced } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
 import { COUNTRIES } from '../constants';
-import { fetchPlayersSuccess } from '../appState/actions';
+import { fetchPlayers } from '../appState/actions';
 
 import './PlayerTable.scss';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
-import api from '../api';
 
 class PlayerTable extends PureComponent {
   static propTypes = {
@@ -23,19 +22,11 @@ class PlayerTable extends PureComponent {
         imageUrl: PropTypes.string.isRequired,
       })
     ).isRequired,
-    fetchPlayersSuccess: PropTypes.func.isRequired,
+    fetchPlayers: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    const { fetchPlayersSuccess } = this.props;
-    api.fetchPlayers()
-      .then(({ data }) => {
-        if (data) {
-          fetchPlayersSuccess(data);
-          return data;
-        }
-        throw new Error(data.message);
-      });
+    this.props.fetchPlayers();
   }
 
   render() {
@@ -54,7 +45,7 @@ class PlayerTable extends PureComponent {
 
 export default connectAdvanced(dispatch => {
   let result;
-  const actions = bindActionCreators({ fetchPlayersSuccess }, dispatch);
+  const actions = bindActionCreators({ fetchPlayers }, dispatch);
 
   return (state, props) => {
     const players = state.playerIds.map(id => state.players[id]);

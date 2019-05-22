@@ -37,6 +37,10 @@ export class Api {
     formData.append('signature', signature);
     return this.imgApi.post('/upload', formData);
   }
+
+  editPlayer(id, name, winnings, country) {
+    return this.api.patch(`/players/${id}`, { name, winnings, country });
+  }
 }
 
 export default new Api(config);

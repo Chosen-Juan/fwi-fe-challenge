@@ -8,6 +8,9 @@ $header-height: 2.5rem;
   width: 100%;
   margin-bottom: 0 !important;
 
+  .table-head {
+    background: $pearl;
+  }
 
   &__row {
     background-color: $snow;
@@ -17,21 +20,18 @@ $header-height: 2.5rem;
       background-color: $pearl;
     }
 
-    &:not(:last-child) {
-      border-bottom: 1px solid $pearl;
-    }
   }
 
-  .centered-text {
-    vertical-align: inherit;
+  td, th {
+    vertical-align: inherit !important;
   }
+
 }
 
 .country {
   align-items: center;
   display: flex;
   height: 100%;
-
   .avatar {
     margin-right: 0.5rem;
   }

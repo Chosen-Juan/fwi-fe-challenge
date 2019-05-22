@@ -6,6 +6,9 @@ import {
   UPLOAD_IMAGE_ERROR,
   UPLOAD_IMAGE_SUCCESS,
   RESET_PLAYER_STORE,
+  EDIT_PLAYER_START,
+  EDIT_PLAYER_ERROR,
+  EDIT_PLAYER_SUCCESS,
 } from './constants';
 
 const initialState = {};
@@ -34,6 +37,18 @@ function uploadImageError(state, { error }) {
   return { ...state, error, loading: false };
 }
 
+function editPlayerStart(state) {
+  return { ...state, loading: true };
+}
+
+function editPlayerSuccess(state) {
+  return { ...state, loading: false };
+}
+
+function editPlayerError(state, { error }) {
+  return { ...state, error, loading: false };
+}
+
 function resetPlayerStore() {
   return initialState;
 }
@@ -52,6 +67,12 @@ export default function players(state = initialState, action) {
       return uploadImageSuccess(state, action.payload.data);
     case UPLOAD_IMAGE_ERROR:
       return uploadImageError(state, action.payload.error);
+    case EDIT_PLAYER_START:
+      return editPlayerStart(state);
+    case EDIT_PLAYER_SUCCESS:
+      return editPlayerSuccess(state);
+    case EDIT_PLAYER_ERROR:
+      return editPlayerError(state, action.payload.error);
     case RESET_PLAYER_STORE:
       return resetPlayerStore();
     default:

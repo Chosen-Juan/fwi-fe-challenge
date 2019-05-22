@@ -250,3 +250,12 @@ export const COUNTRIES = {
   QA: 'Qatar',
   MZ: 'Mozambique',
 };
+export const sortAlphabetically = (a, b) => {
+  if (a.value < b.value) { return -1; }
+  if (a.value > b.value) { return 1; }
+  return 0;
+};
+
+export const COUNTRIES_ARRAY = Object.keys(COUNTRIES)
+  .map(k => ({ code: k, value: COUNTRIES[k] }))
+  .sort(sortAlphabetically);

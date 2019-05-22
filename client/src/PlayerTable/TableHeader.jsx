@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TableHeader = () => (
-  <thead>
+  <thead className="table-head">
     <tr>
       <th />
       <th>
@@ -12,6 +12,9 @@ const TableHeader = () => (
       </th>
       <th>
         Native of
+      </th>
+      <th className="is-hidden-mobile">
+        Controls
       </th>
     </tr>
   </thead>
