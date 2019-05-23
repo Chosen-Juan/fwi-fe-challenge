@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import Flags from 'react-world-flags';
+import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 
 import './Modal.scss';
@@ -11,6 +12,17 @@ import { compress } from '../helpers';
 
 
 export class NewPlayerModal extends Component {
+
+  static propTypes = {
+    createPlayer: PropTypes.func.isRequired,
+    resetPlayerStore: PropTypes.func.isRequired,
+    uploadImage: PropTypes.func.isRequired,
+    playerStore: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      imageUrl: PropTypes.string
+    })
+  };
 
   state = {
     active: false,
@@ -35,13 +47,13 @@ export class NewPlayerModal extends Component {
     this.setState({ active: true });
   }
 
-  componentWillReceiveProps({ player }) {
+  componentWillReceiveProps({ playerStore }) {
     let buttonClass;
-    if (player.loading) {
+    if (playerStore.loading) {
       buttonClass = 'is-loading';
-    } else if (player.error) {
+    } else if (playerStore.error) {
       buttonClass = 'is-danger';
-    } else if (player.success) {
+    } else if (playerStore.success) {
       buttonClass = 'is-success';
     } else {
       buttonClass = 'is-primary';
@@ -77,7 +89,7 @@ export class NewPlayerModal extends Component {
       compress(pic)
         .then(compressedPic => this.props.uploadImage(compressedPic))
         .then(() => {
-          const { imageUrl } = this.props.player;
+          const { imageUrl } = this.props.playerStore;
           return this.props.createPlayer({ name, country, winnings, imageUrl })
         })
         .then(successHandler);
@@ -89,7 +101,7 @@ export class NewPlayerModal extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <button className="button is-primary is-medium is-size-7-mobile" onClick={this.setActive}>New Player</button>
         <div className={this.state.active ? 'modal is-active' : 'modal'}>
           <div className="modal-background" onClick={this.closeModal}></div>
@@ -184,7 +196,7 @@ export class NewPlayerModal extends Component {
                       className={'button ' + this.state.buttonClass}
                       disabled={isSubmitting}
                     >
-                      {this.props.player.success ? 'Saved!' : 'Save'}
+                      {this.props.playerStore.success ? 'Saved!' : 'Save'}
                     </button>
                     <button type="button" className="button is-danger" onClick={() => this.closeModal(handleReset)}>Cancel</button>
                   </footer>
@@ -194,13 +206,13 @@ export class NewPlayerModal extends Component {
             </section>
           </div>
         </div>
-      </React.Fragment>
+      </Fragment>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  player: state.player
+  playerStore: state.player
 });
 
 const mapDispatchToProps = {

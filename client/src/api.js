@@ -19,8 +19,8 @@ export class Api {
     });
   }
 
-  fetchPlayers(from) {
-    return this.api.get('/players', { params: { from }});
+  fetchPlayers(from, size) {
+    return this.api.get('/players', { params: { from, size }});
   }
 
   createPlayer(player) {

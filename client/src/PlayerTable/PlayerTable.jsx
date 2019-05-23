@@ -10,6 +10,7 @@ import { fetchPlayers } from '../appState/actions';
 import './PlayerTable.scss';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
+import Pages from '../Pages/Pages';
 
 class PlayerTable extends PureComponent {
   static propTypes = {
@@ -32,13 +33,16 @@ class PlayerTable extends PureComponent {
   render() {
     const { players } = this.props;
     return (
-      <table
-        aria-label="Poker Players"
-        className="table is-scrollable"
-      >
-        <TableHeader />
-        <TableBody players={players} />
-      </table>
+      <div className="player-table">
+        <Pages />
+        <table
+          aria-label="Poker Players"
+          className="table is-scrollable"
+        >
+          <TableHeader />
+          <TableBody players={players} />
+        </table>
+      </div>
     );
   }
 }
@@ -49,8 +53,8 @@ export default connectAdvanced(dispatch => {
 
   return (state, props) => {
     const players = state.playerIds.map(id => state.players[id]);
-
-    const nextResult = { ...props, ...actions, players };
+    const { from, size, total } = state;
+    const nextResult = { ...props, ...actions, players, from, size, total };
 
     if (!shallowEqual(result, nextResult)) {
       result = nextResult;

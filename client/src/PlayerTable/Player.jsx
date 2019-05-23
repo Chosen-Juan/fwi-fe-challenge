@@ -15,7 +15,9 @@ export class Player extends Component {
       country: PropTypes.oneOf(Object.keys(COUNTRIES)),
       winnings: PropTypes.number.isRequired,
       imageUrl: PropTypes.string.isRequired,
-    })
+    }),
+    editPlayer: PropTypes.func.isRequired,
+    deletePlayer: PropTypes.func.isRequired,
   };
 
   handleButtonPress = () => {
@@ -85,11 +87,11 @@ export class Player extends Component {
         onTouchStart={this.handleButtonPress}
         onTouchEnd={this.handleButtonRelease}
       >
-        <tr className={this.state.editing ? "is-hidden-desktop" : "is-hidden"}>
+        <td className={this.state.editing ? "is-hidden-desktop" : "is-hidden"}>
           <button className="button is-primary" onClick={this.saveEdit}>Save</button>
           <button className="button is-danger" onClick={() => this.setEditing(false)}>Cancel</button>
-        </tr>
-        <td>
+        </td>
+        <td className="is-narrow">
           <Avatar src={player.imageUrl} />
         </td>
         <td hidden={this.state.editing}>
@@ -121,7 +123,7 @@ export class Player extends Component {
           </select>
         </td>
         <td className={this.state.success ? "notification is-success" : "is-hidden"}>Saved</td>
-        <td className={this.state.success ? "is-hidden" : ""}>
+        <td className={this.state.success ? "is-hidden" : "is-narrow"}>
           <div className={this.state.editing ? "is-hidden-touch": "is-hidden"}>
             <button className="button is-primary" onClick={this.saveEdit}>Save</button>
             <button className="button is-danger" onClick={() => this.setEditing(false)}>Cancel</button>

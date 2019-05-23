@@ -62,9 +62,9 @@ export function deletePlayerError(error) {
   return { type: DELETE_PLAYER_ERROR, payload: { error } };
 }
 
-export function fetchPlayers() {
+export function fetchPlayers(from, size) {
   return function(dispatch) {
-    return api.fetchPlayers()
+    return api.fetchPlayers(from, size)
       .then(({ data }) => {
         if (data) {
           dispatch(fetchPlayersSuccess(data));
