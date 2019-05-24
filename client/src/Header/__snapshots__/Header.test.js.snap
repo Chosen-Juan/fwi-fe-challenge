@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should match snapshot 1`] = `
+<header
+  className="header level is-mobile"
+  id="main-header"
+>
+  <div
+    className="level-left"
+  >
+    <div
+      className="logo"
+    >
+      <ForwardRef
+        className="logo__color"
+      />
+      <ForwardRef
+        className="logo__effects"
+      />
+    </div>
+    <h1
+      className="title is-size-6-mobile"
+    >
+      FWI Poker Challenge
+    </h1>
+  </div>
+  <Connect(NewPlayerModal) />
+</header>
+`;

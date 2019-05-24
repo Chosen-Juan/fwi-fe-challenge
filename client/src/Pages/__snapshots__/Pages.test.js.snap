@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pages should match snapshot 1`] = `
+<div
+  className="pages level is-mobile"
+>
+  <div
+    className="level-left"
+  >
+    <button
+      className="button"
+      id="button-previous"
+      onClick={[Function]}
+    >
+      &lt;
+    </button>
+  </div>
+  <div
+    className="level-item"
+  >
+    <button
+      className="button is-primary"
+      key="0"
+      onClick={[Function]}
+    >
+      1
+    </button>
+    <button
+      className="button is-primary is-outlined"
+      key="1"
+      onClick={[Function]}
+    >
+      2
+    </button>
+    <button
+      className="button is-primary is-outlined"
+      key="2"
+      onClick={[Function]}
+    >
+      3
+    </button>
+    <button
+      className="button is-primary is-outlined"
+      key="3"
+      onClick={[Function]}
+    >
+      4
+    </button>
+  </div>
+  <div
+    className="level-right"
+  >
+    <button
+      className="button"
+      id="button-next"
+      onClick={[Function]}
+    >
+      &gt;
+    </button>
+  </div>
+</div>
+`;

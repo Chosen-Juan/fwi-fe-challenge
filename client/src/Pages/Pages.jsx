@@ -19,7 +19,7 @@ export class Pages extends Component {
     from: 0,
     numberOfPages: 0,
     selectedPage: 0,
-  }
+  };
 
   componentWillReceiveProps(props) {
     const { total, from } = props;
@@ -68,19 +68,19 @@ export class Pages extends Component {
       );
     }
     return pages;
-  }
+  };
 
   render() {
     return (
       <div className="pages level is-mobile">
         <div className="level-left">
-          <button className="button" onClick={this.previousPage}>{'<'}</button>
+          <button id="button-previous" className="button" onClick={this.previousPage}>{'<'}</button>
         </div>
         <div className="level-item">
           {this.getPages()}
         </div>
         <div className="level-right">
-          <button className="button" onClick={this.nextPage}>{'>'}</button>
+          <button id="button-next" className="button" onClick={this.nextPage}>{'>'}</button>
         </div>
       </div>
     );

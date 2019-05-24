@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableHeader should match snapshot 1`] = `
+<thead
+  className="table-head"
+>
+  <tr>
+    <th />
+    <th>
+      Player
+    </th>
+    <th>
+      Winnings
+    </th>
+    <th>
+      Native of
+    </th>
+    <th
+      className="is-hidden-mobile"
+    >
+      Controls
+    </th>
+  </tr>
+</thead>
+`;

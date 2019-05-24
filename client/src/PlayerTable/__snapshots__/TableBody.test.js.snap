@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableBody should match snapshot 1`] = `
+<tbody
+  className="table--body"
+>
+  <Connect(Player)
+    key="1one"
+    player={
+      Object {
+        "country": "US",
+        "id": "1one",
+        "imageUrl": "",
+        "name": "Jon Doe",
+        "winnings": 24999,
+      }
+    }
+  />
+</tbody>
+`;

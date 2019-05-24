@@ -12,7 +12,7 @@ import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import Pages from '../Pages/Pages';
 
-class PlayerTable extends PureComponent {
+export class PlayerTable extends PureComponent {
   static propTypes = {
     players: PropTypes.arrayOf(
       PropTypes.shape({

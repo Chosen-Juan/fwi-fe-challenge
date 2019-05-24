@@ -132,7 +132,7 @@ added any additional steps.
 - [-] Delete Player
 - [ ] Implement sorting (optional)
 - [-] Lazy loading/pagination (optional)
-- [ ] Tests (optional)
+- [-] Tests (optional)
 
 ## API Documentation
 

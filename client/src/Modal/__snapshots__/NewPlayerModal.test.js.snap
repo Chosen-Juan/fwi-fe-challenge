@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewPlayerModal should match snapshot 1`] = `
+<Fragment>
+  <button
+    className="button is-primary is-medium is-size-7-mobile"
+    onClick={[Function]}
+  >
+    New Player
+  </button>
+  <div
+    className="modal"
+  >
+    <div
+      className="modal-background"
+      onClick={[Function]}
+    />
+    <div
+      className="modal-card"
+    >
+      <header
+        className="modal-card-head"
+      >
+        <p
+          className="modal-card-title"
+        >
+          Add new player
+        </p>
+        <button
+          aria-label="close"
+          className="delete"
+          onClick={[Function]}
+        />
+      </header>
+      <section
+        className="modal-card-body"
+      >
+        <Formik
+          enableReinitialize={false}
+          initialValues={
+            Object {
+              "country": "US",
+              "name": "",
+              "winnings": "",
+            }
+          }
+          isInitialValid={false}
+          onSubmit={[Function]}
+          validateOnBlur={true}
+          validateOnChange={true}
+        >
+          <Component />
+        </Formik>
+      </section>
+    </div>
+  </div>
+</Fragment>
+`;

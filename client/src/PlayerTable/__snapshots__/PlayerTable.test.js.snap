@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlayerTable should match snapshot 1`] = `
+<div
+  className="player-table"
+>
+  <Connect(Pages) />
+  <table
+    aria-label="Poker Players"
+    className="table is-scrollable"
+  >
+    <TableHeader />
+    <TableBody
+      players={
+        Array [
+          Object {
+            "country": "US",
+            "id": "1one",
+            "imageUrl": "",
+            "name": "Jon Doe",
+            "winnings": 24999,
+          },
+        ]
+      }
+    />
+  </table>
+</div>
+`;
