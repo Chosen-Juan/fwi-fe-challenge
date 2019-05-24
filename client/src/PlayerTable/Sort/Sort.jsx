@@ -30,7 +30,10 @@ export class Sort extends Component {
 
   sort = () => {
     const { playerKey, sortPlayers } = this.props;
-    this.changeDirection(() => sortPlayers(playerKey, this.state.direction));
+    this.changeDirection(() => {
+      const direction = this.state.direction ? this.state.direction : 'asc';
+      sortPlayers(playerKey, direction);
+    });
   };
 
   getSymbol = () => {
