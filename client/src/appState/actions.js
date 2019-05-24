@@ -11,6 +11,7 @@ import {
   EDIT_PLAYER_SUCCESS,
   EDIT_PLAYER_ERROR,
   DELETE_PLAYER_ERROR,
+  SORT_PLAYERS,
 } from './constants';
 import api from '../api';
 
@@ -62,67 +63,72 @@ export function deletePlayerError(error) {
   return { type: DELETE_PLAYER_ERROR, payload: { error } };
 }
 
+export function sortPlayers(key, direction) {
+  return { type: SORT_PLAYERS, payload: { data: { key, direction } } };
+}
+
 export function fetchPlayers(from, size) {
   return function(dispatch) {
-    return api.fetchPlayers(from, size)
-      .then(({ data }) => {
-        if (data) {
-          dispatch(fetchPlayersSuccess(data));
-          return data;
-        }
-        throw new Error(data.message);
-      });
-  }
+    return api.fetchPlayers(from, size).then(({ data }) => {
+      if (data) {
+        dispatch(fetchPlayersSuccess(data));
+        return data;
+      }
+      throw new Error(data.message);
+    });
+  };
 }
 
 export function createPlayer(player) {
   return function(dispatch) {
     dispatch(createPlayerStart());
-    return api.createPlayer(player)
+    return api
+      .createPlayer(player)
       .then(
         () => dispatch(createPlayerSuccess()),
         error => dispatch(createPlayerError(error))
       );
-  }
+  };
 }
 
 export function uploadImage(file) {
   return function(dispatch) {
     dispatch(uploadImageStart());
-    return api.uploadImage(file)
+    return api
+      .uploadImage(file)
       .then(
         data => dispatch(uploadImageSuccess(data)),
         error => dispatch(uploadImageError(error))
       );
-  }
+  };
 }
 
 export function resetPlayerStore() {
   return function(dispatch) {
-    dispatch(resetPlayerStoreAction())
-  }
+    dispatch(resetPlayerStoreAction());
+  };
 }
 
 export function editPlayer(id, name, winnings, country) {
   return function(dispatch) {
     dispatch(editPlayerStart());
-    return api.editPlayer(id, name, winnings, country)
-      .then(
-        () => {
-          dispatch(editPlayerSuccess());
-          dispatch(fetchPlayers());
-        },
-        error => dispatch(editPlayerError(error))
-      );
-  }
+    return api.editPlayer(id, name, winnings, country).then(
+      () => {
+        dispatch(editPlayerSuccess());
+        dispatch(fetchPlayers());
+      },
+      error => dispatch(editPlayerError(error))
+    );
+  };
 }
 
 export function deletePlayer(id) {
   return function(dispatch) {
-    return api.deletePlayer(id)
+    return api
+      .deletePlayer(id)
       .then(
         () => dispatch(fetchPlayers()),
         error => dispatch(deletePlayerError(error))
       );
-  }
+  };
 }

@@ -8,12 +8,21 @@ exports[`TableHeader should match snapshot 1`] = `
     <th />
     <th>
       Player
+      <Connect(Sort)
+        playerKey="name"
+      />
     </th>
     <th>
       Winnings
+      <Connect(Sort)
+        playerKey="winnings"
+      />
     </th>
     <th>
       Native of
+      <Connect(Sort)
+        playerKey="country"
+      />
     </th>
     <th
       className="is-hidden-mobile"

@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connectAdvanced } from 'react-redux';
-import shallowEqual from 'shallowequal';
+import { connect } from 'react-redux';
 
 import { COUNTRIES } from '../constants';
 import { fetchPlayers } from '../appState/actions';
@@ -35,10 +33,7 @@ export class PlayerTable extends PureComponent {
     return (
       <div className="player-table">
         <Pages />
-        <table
-          aria-label="Poker Players"
-          className="table is-scrollable"
-        >
+        <table aria-label="Poker Players" className="table is-scrollable">
           <TableHeader />
           <TableBody players={players} />
         </table>
@@ -46,20 +41,16 @@ export class PlayerTable extends PureComponent {
     );
   }
 }
-
-export default connectAdvanced(dispatch => {
-  let result;
-  const actions = bindActionCreators({ fetchPlayers }, dispatch);
-
-  return (state, props) => {
-    const players = state.playerIds.map(id => state.players[id]);
-    const { from, size, total } = state;
-    const nextResult = { ...props, ...actions, players, from, size, total };
-
-    if (!shallowEqual(result, nextResult)) {
-      result = nextResult;
-    }
-
-    return result;
-  };
-})(PlayerTable);
+const mapStateToProps = ({ players: { from, size, total, players } }) => ({
+  from,
+  size,
+  total,
+  players,
+});
+const mapDispatchToProps = {
+  fetchPlayers,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerTable);
